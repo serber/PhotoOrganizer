@@ -22,10 +22,8 @@ public class VideoDateReader : IDateReader
     {
         try
         {
-            var fileInfo = new FileInfo(filePath);
-
             var ffProbe = new FFProbe();
-            var videoInfo = ffProbe.GetMediaInfo(fileInfo.FullName);
+            var videoInfo = ffProbe.GetMediaInfo(filePath);
 
             var creationTimePair = videoInfo.FormatTags.FirstOrDefault(x => x.Key.Equals("creation_time"));
             if (DateTime.TryParse(creationTimePair.Value, out var dateVideoTaken))
