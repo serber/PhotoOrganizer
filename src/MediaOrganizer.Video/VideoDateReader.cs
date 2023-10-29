@@ -1,4 +1,5 @@
-﻿using MediaOrganizer.Common;
+﻿using System.Runtime.InteropServices;
+using MediaOrganizer.Common;
 using NReco.VideoInfo;
 
 namespace MediaOrganizer.Video;
@@ -25,10 +26,11 @@ public class VideoDateReader : IDateReader
             var ffProbe = new FFProbe();
             var videoInfo = ffProbe.GetMediaInfo(filePath);
 
-            var creationTimePair = videoInfo.FormatTags.FirstOrDefault(x => x.Key.Equals("creation_time"));
-            if (DateTime.TryParse(creationTimePair.Value, out var dateVideoTaken))
+            var creationDate = GetCreationDateTime(videoInfo, new[] { "com.apple.quicktime.creationdate", "creation_time" });
+
+            if (creationDate is not null)
             {
-                return dateVideoTaken;
+                return creationDate.Value;
             }
         }
         catch
@@ -37,5 +39,19 @@ public class VideoDateReader : IDateReader
         }
 
         return ReaderHelper.GetDefault(filePath);
+    }
+
+    private static DateTime? GetCreationDateTime(MediaInfo videoInfo, IEnumerable<string> tags)
+    {
+        foreach (var tag in tags)
+        {
+            var pair = videoInfo.FormatTags.FirstOrDefault(x => x.Key.Equals(tag, StringComparison.OrdinalIgnoreCase));
+            if (DateTime.TryParse(pair.Value, out var dateVideoTaken))
+            {
+                return dateVideoTaken;
+            }
+        }
+
+        return null;
     }
 }

@@ -5,13 +5,9 @@ using MediaOrganizer.Image;
 using MediaOrganizer.Video;
 
 Parser.Default.ParseArguments<CommandLineArguments>(args)
-    .WithParsed(arguments => RunOptionsAndReturnExitCode(arguments))
-    .WithNotParsed((errors) => HandleParseError(errors));
+    .WithParsed(RunOptionsAndReturnExitCode)
+    .WithNotParsed(HandleParseError);
 
-/// <summary>
-/// Execute program
-/// </summary>
-/// <param name="arguments">Parsed arguments</param>
 static void RunOptionsAndReturnExitCode(CommandLineArguments arguments)
 {
     try
@@ -27,13 +23,9 @@ static void RunOptionsAndReturnExitCode(CommandLineArguments arguments)
     }
 }
 
-/// <summary>
-/// Handle command line argument parse error
-/// </summary>
-/// <param name="errors">Errors</param>
 static void HandleParseError(IEnumerable<Error> errors)
 {
-    Console.WriteLine($"Not all required argumets passed");
+    Console.WriteLine("Not all required arguments passed");
     Console.WriteLine(string.Join(Environment.NewLine, errors.Select(x => x.ToString())));
     Console.ReadKey();
 }
