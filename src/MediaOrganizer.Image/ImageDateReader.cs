@@ -9,7 +9,7 @@ public class ImageDateReader : IDateReader
 {
     private readonly string[] _imageFileExtensions = new[]
     {
-        ".tif", ".tiff", ".gif", ".jpeg", ".jpg", ".jif", ".jfif", ".jp2", ".jpx", ".j2k", ".j2c", ".fpx", ".pcd", ".png", ".heic"
+        ".tif", ".tiff", ".gif", ".jpeg", ".jpg", ".jif", ".jfif", ".jp2", ".jpx", ".j2k", ".j2c", ".fpx", ".pcd", ".png", ".heic", ".dng"
     };
 
     /// <inheritdoc />

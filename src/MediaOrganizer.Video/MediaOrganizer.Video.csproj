@@ -15,4 +15,10 @@
 		<ProjectReference Include="..\MediaOrganizer.Common\MediaOrganizer.Common.csproj" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <None Update="ffprobe.exe">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
+	</ItemGroup>
+
 </Project>
